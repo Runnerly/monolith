@@ -4,3 +4,4 @@ celery
 redis
 flask-wtf
 flask-sqlalchemy
+stravalib

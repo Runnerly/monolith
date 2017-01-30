@@ -26,7 +26,7 @@ class User(db.Model):
     strava_token = db.Column(db.String(128))
     age = db.Column(db.Integer)
     weight = db.Column(db.Numeric(4, 1))
-    #sex = db.Column(db.Enum(Gender))
+    # sex = db.Column(db.Enum(Gender))
     max_hr = db.Column(db.Integer)
     rest_hr = db.Column(db.Integer)
     vo2max = db.Column(db.Numeric(4, 2))
@@ -58,10 +58,11 @@ class User(db.Model):
 class Run(db.Model):
     __tablename__ = 'run'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.Unicode(128))
     strava_id = db.Column(db.Integer)
     distance = db.Column(db.Float)
     start_date = db.Column(db.DateTime)
-    elapsed_time = db.Column(db.Integer)
+    elapsed_time = db.Column(db.Float)
     average_speed = db.Column(db.Float)
     average_heartrate = db.Column(db.Float)
     total_elevation_gain = db.Column(db.Float)
