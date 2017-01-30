@@ -1,0 +1,6 @@
+flask
+flask-login
+celery
+redis
+flask-wtf
+flask-sqlalchemy
