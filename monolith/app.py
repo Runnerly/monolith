@@ -1,9 +1,9 @@
 from stravalib import Client
 import functools
 import os
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, jsonify
 from flask_login import (LoginManager, login_user, logout_user, login_required,
-                         current_user, current_app)
+                         current_user)
 from monolith.database import db, User, Run
 from monolith.forms import UserForm, LoginForm
 
@@ -14,6 +14,16 @@ app.config['SECRET_KEY'] = 'ANOTHER ONE'
 app.config['STRAVA_CLIENT_ID'] = os.environ['STRAVA_CLIENT_ID']
 app.config['STRAVA_CLIENT_SECRET'] = os.environ['STRAVA_CLIENT_SECRET']
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/runnerly'
+
+
+
+@app.route('/fetch')
+def _fetch():
+    from monolith.background import fetch_all_runs
+    res = fetch_all_runs.delay()
+    res.wait()
+    return jsonify(res.result)
+
 
 
 def _strava_auth_url():
@@ -42,7 +52,7 @@ def _strava_auth():
 
 @app.route('/')
 def index():
-    if current_user is not None:
+    if current_user is not None and hasattr(current_user, 'id'):
         runs = db.session.query(Run).filter(Run.runner_id == current_user.id)
     else:
         runs = None
@@ -62,7 +72,7 @@ def admin_required(func):
     def _admin_required(*args, **kw):
         admin = current_user.is_authenticated and current_user.is_admin
         if not admin:
-            return current_app.login_manager.unauthorized()
+            return app.login_manager.unauthorized()
         return func(*args, **kw)
     return _admin_required
 
