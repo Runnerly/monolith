@@ -23,7 +23,7 @@ def fetch_all_runs():
     return run_fetched
 
 
-def activity2run(activity):
+def activity2run(user, activity):
     run = Run()
     run.runner = user
     run.strava_id = activity.id
@@ -48,7 +48,7 @@ def fetch_runs(user):
         run = q.first()
 
         if run is None:
-            db.session.add(activity2run(activity))
+            db.session.add(activity2run(user, activity))
             runs += 1
 
     db.session.commit()

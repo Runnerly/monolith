@@ -2,11 +2,11 @@
   <body>
     <h1>User List</h1>
     <ul>
-      <li>
       {% for user in users: %}
+      <li>
       {{user.firstname}} {{user.lastname}}
-      {% endfor %}
       </li>
+      {% endfor %}
     </ul>
   </body>
 </html>
