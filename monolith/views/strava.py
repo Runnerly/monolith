@@ -6,7 +6,7 @@ strava = Blueprint('strava', __name__)
 
 
 @strava.route('/fetch')
-def _fetch():
+def fetch_runs():
     res = fetch_all_runs.delay()
     res.wait()
     return jsonify(res.result)
