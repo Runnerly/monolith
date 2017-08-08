@@ -14,11 +14,11 @@ How to run the Flask app
 ------------------------
 
 
-For this application to work, you need Strava credentials
-see https://strava.github.io/api/#access.
+For this application to work, you need to create a Strava API application
+see https://strava.github.io/api/#access and https://www.strava.com/settings/api
 
-Once you have a client id and secret, you need to export
-them as environment variables::
+Once you have an application, you will have a "Client Id" and "Client Secret".
+You need to export them as environment variables::
 
     export STRAVA_CLIENT_ID=<ID>
     export STRAVA_CLIENT_SECRET=<SECRET>
