@@ -13,7 +13,8 @@ def fetch_all_runs():
     global _APP
     # lazy init
     if _APP is None:
-        from monolith.app import app
+        from monolith.app import create_app
+        app = create_app()
         db.init_app(app)
     else:
         app = _APP
@@ -32,8 +33,8 @@ def fetch_all_runs():
 
 
 def activity2run(user, activity):
-    “”””Used by fetch_runs to convert a strava run into a DB entry.
-    ”””
+    """Used by fetch_runs to convert a strava run into a DB entry.
+    """
     run = Run()
     run.runner = user
     run.strava_id = activity.id
